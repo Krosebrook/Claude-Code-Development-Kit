@@ -1,7 +1,7 @@
 # Claude Code Development Kit
 
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Changelog](https://img.shields.io/badge/changelog-v2.1.0-orange.svg)](CHANGELOG.md)
+[![Changelog](https://img.shields.io/badge/changelog-v2.2.0-orange.svg)](CHANGELOG.md)
 
 An integrated system that transforms Claude Code into an orchestrated development environment through automated documentation management, multi-agent workflows, and external AI expertise.
 
@@ -259,12 +259,16 @@ The kit includes battle-tested hooks that enhance Claude Code's capabilities:
 - **Gemini Context Injector** - Automatically includes project structure in Gemini consultations
 - **Subagent Context Injector** - Ensures all sub-agents receive core documentation automatically
 - **Notification System** - Provides non-blocking audio feedback for task completion and input requests (optional)
+- **Test Runner** - Validates tests pass before git commits (optional)
+- **Test Context Injector** - Enriches test-related tasks with framework-specific patterns
+- **Test Watcher** - Runs related tests automatically when files change (optional)
 
 These hooks integrate seamlessly with the command and MCP server workflows, providing:
 - Pre-execution security checks for all external AI calls
 - Automatic context enhancement for both external AI and sub-agents
 - Consistent knowledge across all agents in multi-agent workflows
 - Developer awareness through pleasant, non-blocking audio notifications
+- Continuous testing feedback during development
 
 ## Common Tasks
 
@@ -304,6 +308,28 @@ Automatically:
 - Keeps project-structure.md and docs-overview.md up-to-date
 - Maintains context for future AI sessions
 - Ensures documentation matches implementation
+
+### Test-Driven Development
+
+```bash
+/test "generate tests for user service"
+```
+
+The testing framework:
+1. Auto-detects your testing framework (Jest, Vitest, pytest, Go, etc.)
+2. Spawns specialized agents for unit, integration, and edge case tests
+3. Follows your project's existing test patterns
+4. Generates comprehensive, maintainable tests
+
+```bash
+/test-coverage "analyze payment module"
+```
+
+Coverage analysis:
+- Collects and analyzes coverage metrics
+- Categorizes gaps by severity (critical, high, medium, low)
+- Assesses test quality beyond line coverage
+- Provides actionable improvement recommendations
 
 ## Creating Your Project Structure
 

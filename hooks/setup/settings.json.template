@@ -28,6 +28,33 @@
             "type": "command",
             "command": "${WORKSPACE}/.claude/hooks/subagent-context-injector.sh",
             "description": "Automatically adds project context to sub-agent prompts"
+          },
+          {
+            "type": "command",
+            "command": "${WORKSPACE}/.claude/hooks/test-context-injector.sh",
+            "description": "Adds testing context to test-related sub-agent prompts"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${WORKSPACE}/.claude/hooks/test-runner-hook.sh",
+            "description": "Runs tests before git commits (enable in config/test-patterns.json)"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${WORKSPACE}/.claude/hooks/test-watcher.sh",
+            "description": "Runs related tests when files change (enable in config/test-patterns.json)"
           }
         ]
       }

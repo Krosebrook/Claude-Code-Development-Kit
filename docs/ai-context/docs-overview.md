@@ -41,6 +41,21 @@ This hierarchy allows AI agents to load targeted context efficiently while maint
 - **[Infrastructure Code](/infrastructure/CONTEXT.md)** - *IaC patterns.* Terraform/CloudFormation templates, resource definitions, and deployment automation
 - **[Monitoring Setup](/monitoring/CONTEXT.md)** - *Observability patterns.* Metrics collection, alerting rules, and dashboard configurations
 
+## Testing Documentation
+
+Specialized documentation for testing patterns and quality assurance:
+
+- **[Testing Context Template](/docs/CONTEXT-testing.md)** - *Testing patterns and conventions.* Framework configuration, test structure, mocking strategies, and coverage requirements
+
+### Test-Related Commands
+- `/test` - Multi-agent test generation and execution
+- `/test-coverage` - Deep coverage analysis and gap identification
+
+### Testing Hooks
+- `test-runner-hook.sh` - Pre-commit test validation
+- `test-context-injector.sh` - Auto-inject testing context to test-related tasks
+- `test-watcher.sh` - Continuous testing feedback on file changes
+
 ## Tier 3: Feature-Specific Documentation
 
 Granular CONTEXT.md files co-located with code for minimal cascade effects:

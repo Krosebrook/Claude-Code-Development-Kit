@@ -105,6 +105,40 @@ All commands benefit from automatic context injection via the `subagent-context-
 
 **How it works**: Updates the handoff documentation with session achievements, current state, and next steps. Ensures smooth continuation in future sessions.
 
+### 🧪 `/test`
+**Purpose**: Multi-agent test generation and execution framework for comprehensive, maintainable tests.
+
+**When to use**:
+- Generating tests for new or existing code
+- Running tests for specific components
+- Need comprehensive test coverage for a feature
+- Want to validate changes before committing
+
+**How it works**: Detects your testing framework automatically, spawns specialized agents for unit tests, integration tests, and edge cases. Generates tests following your project's existing patterns and conventions.
+
+**Key features**:
+- Framework auto-detection (Jest, Vitest, pytest, Go, Cargo, Mocha)
+- Multi-agent parallel test generation
+- Edge case and error handling coverage
+- Respects existing test patterns
+
+### 📊 `/test-coverage`
+**Purpose**: Deep coverage analysis that identifies untested code paths and provides actionable recommendations.
+
+**When to use**:
+- Evaluating test suite completeness
+- Identifying coverage gaps before releases
+- Planning test improvement efforts
+- Understanding test quality beyond percentages
+
+**How it works**: Runs coverage tools, analyzes results with specialized agents, categorizes gaps by severity, and provides prioritized recommendations for improvement.
+
+**Key features**:
+- Coverage metrics collection and analysis
+- Gap categorization (critical, high, medium, low)
+- Test quality assessment beyond line coverage
+- Actionable improvement recommendations
+
 ## Integration Patterns
 
 ### Typical Workflow
@@ -128,7 +162,16 @@ All commands benefit from automatic context injection via the `subagent-context-
 /full-context "analyze authentication module"   # Understand current state
 /refactor "@auth/large-auth-file.ts"          # Restructure
 /code-review "review refactored auth"          # Verify quality
+/test "generate tests for refactored auth"     # Ensure coverage
 /update-docs "document new auth structure"     # Keep docs current
+```
+
+### Test-Driven Development
+```bash
+/test "generate tests for user registration"   # Write tests first
+# ... implement the feature ...
+/test "run tests for user registration"        # Verify implementation
+/test-coverage "analyze registration coverage" # Check completeness
 ```
 
 ### Complex Problem Solving

@@ -6,6 +6,74 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [2.3.0] - 2026-01-08
+
+### Added
+- **Extended Command Suite** - 6 new commands for comprehensive development workflows
+  - New `/dependency-audit` command for security scanning
+    - Multi-ecosystem support (npm, pip, go, cargo, etc.)
+    - CVE severity classification and prioritization
+    - Upgrade path analysis with breaking change detection
+    - License compatibility checking
+  - New `/performance` command for profiling analysis
+    - Framework-specific profiling tools
+    - CPU, memory, and I/O analysis
+    - Flamegraph generation and analysis
+    - N+1 query detection
+  - New `/debug` command for systematic debugging
+    - Stack trace analysis
+    - Execution flow tracing
+    - State corruption detection
+    - Pattern-based bug recognition
+  - New `/migrate` command for migrations and upgrades
+    - Breaking change analysis
+    - Data migration planning
+    - Rollback strategy generation
+    - Validation checkpoints
+  - New `/scaffold` command for project templating
+    - Pattern detection from existing code
+    - Framework-aware generation
+    - Test and documentation generation
+  - New `/api-docs` command for API documentation
+    - OpenAPI 3.x specification generation
+    - Request/response example generation
+    - Authentication documentation
+
+- **Extended Hooks System** - 3 new hooks for enhanced automation
+  - New `ci-integration-hook.sh` for CI/CD suggestions
+    - Multi-platform support (GitHub Actions, GitLab CI, CircleCI, Jenkins)
+    - Project type detection
+    - Framework-specific recommendations
+  - New `context-validator-hook.sh` for documentation consistency
+    - Reference validation
+    - Staleness detection
+    - docs-overview.md synchronization
+  - New `session-analytics-hook.sh` for usage tracking
+    - Local-only privacy-focused analytics
+    - Command and tool usage patterns
+    - Daily activity metrics
+
+- New `config/analytics-config.json` for analytics settings
+
+### Improved
+- Extended hooks architecture with 10 total hooks
+- Updated settings.json.template with all hooks
+- Comprehensive command coverage for full development lifecycle
+- Enhanced documentation across all README files
+
+### What's New in v2.3.0:
+- **Security**: `/dependency-audit` for vulnerability scanning and upgrade recommendations
+- **Performance**: `/performance` for profiling and optimization guidance
+- **Debugging**: `/debug` for systematic root cause analysis
+- **Migrations**: `/migrate` for safe version upgrades and schema changes
+- **Scaffolding**: `/scaffold` for consistent code generation
+- **API Docs**: `/api-docs` for OpenAPI specification generation
+- **CI/CD**: Hook suggestions when creating CI configuration files
+- **Documentation Validation**: Automatic consistency checking for CONTEXT files
+- **Analytics**: Optional usage tracking for workflow optimization
+- **No Breaking Changes**: All v2.2.0 features remain unchanged and fully compatible
+
+
 ## [2.2.0] - 2026-01-08
 
 ### Added

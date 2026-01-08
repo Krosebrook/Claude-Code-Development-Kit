@@ -11,11 +11,14 @@ Claude Code Lifecycle
         │                      ├── Context Injector (Gemini)
         │                      ├── Context Injector (Subagents)
         │                      ├── Test Context Injector
-        │                      └── Test Runner (Pre-commit)
+        │                      ├── Test Runner (Pre-commit)
+        │                      └── Session Analytics
         │
         ├── Tool Execution
         │
         ├── PostToolUse ─────► Test Watcher
+        │                      ├── CI Integration
+        │                      └── Context Validator
         │
         ├── Notification ────────► Audio Feedback
         │
@@ -161,6 +164,71 @@ These hooks execute at specific points in Claude Code's lifecycle, providing det
 **Configuration**:
 - Enable in `config/test-patterns.json` by setting `watch_mode.enabled: true`
 - Configure timeout, notification preferences
+
+### 8. CI Integration Hook (`ci-integration-hook.sh`)
+
+**Purpose**: Analyzes project structure and provides CI/CD configuration suggestions when CI files are created or modified.
+
+**Trigger**: `PostToolUse` for `Write` tool (CI/CD configuration files)
+
+**Features**:
+- Detects CI/CD file creation (GitHub Actions, GitLab CI, CircleCI, Jenkins)
+- Auto-detects project type (Node.js, Python, Go, Rust, Docker)
+- Generates framework-specific CI suggestions
+- Logs recommendations for review
+- Non-blocking (suggestions only)
+
+**Supported CI Platforms**:
+- GitHub Actions (`.github/workflows/`)
+- GitLab CI (`.gitlab-ci.yml`)
+- CircleCI (`.circleci/config.yml`)
+- Jenkins (`Jenkinsfile`)
+- Travis CI (`.travis.yml`)
+
+### 9. Context Validator Hook (`context-validator-hook.sh`)
+
+**Purpose**: Validates documentation consistency and identifies stale CONTEXT.md files.
+
+**Trigger**: `PostToolUse` for `Read` and `Edit` tools (CONTEXT.md and CLAUDE.md files)
+
+**Features**:
+- Validates file references in documentation
+- Detects potentially stale documentation
+- Checks docs-overview.md consistency
+- Identifies undocumented CONTEXT files
+- Logs warnings for review
+- Non-blocking operation
+
+**Validations Performed**:
+- Broken link detection in markdown
+- Staleness check (source files newer than docs)
+- docs-overview.md synchronization
+- Missing documentation identification
+
+### 10. Session Analytics Hook (`session-analytics-hook.sh`)
+
+**Purpose**: Tracks command and tool usage patterns for insights and optimization.
+
+**Trigger**: `PreToolUse` for all tools
+
+**Features**:
+- Tracks tool invocations
+- Records command usage patterns
+- Calculates daily activity metrics
+- Generates usage reports
+- Local-only data storage (no external transmission)
+- Privacy-focused (no content or file paths recorded)
+
+**Configuration**:
+- Enable in `config/analytics-config.json` by setting `enabled: true`
+- Configure data retention and tracking preferences
+- Run `./session-analytics-hook.sh --report` to view analytics
+
+**Privacy Guarantees**:
+- All data stored locally only
+- No file paths or content recorded
+- Fully anonymized metrics
+- No external transmission
 
 ## Installation
 

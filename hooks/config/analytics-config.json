@@ -1,0 +1,27 @@
+{
+  "enabled": false,
+  "description": "Session analytics for tracking command and tool usage patterns. Set to true to enable.",
+  "data_retention": {
+    "days": 90,
+    "description": "How long to keep analytics data (in days)"
+  },
+  "tracking": {
+    "tool_usage": true,
+    "command_usage": true,
+    "daily_activity": true,
+    "session_duration": false,
+    "workflows": false
+  },
+  "privacy": {
+    "local_only": true,
+    "no_file_paths": true,
+    "no_content": true,
+    "anonymized": true,
+    "description": "All data is stored locally and never transmitted. No sensitive information is recorded."
+  },
+  "reports": {
+    "auto_generate": false,
+    "frequency": "weekly",
+    "location": ".claude/logs/analytics-reports/"
+  }
+}

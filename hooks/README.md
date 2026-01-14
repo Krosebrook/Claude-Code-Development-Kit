@@ -9,11 +9,16 @@ Claude Code Lifecycle
         │
         ├── PreToolUse ──────► Security Scanner
         │                      ├── Context Injector (Gemini)
-        │                      └── Context Injector (Subagents)
+        │                      ├── Context Injector (Subagents)
+        │                      ├── Test Context Injector
+        │                      ├── Test Runner (Pre-commit)
+        │                      └── Session Analytics
         │
         ├── Tool Execution
         │
-        ├── PostToolUse
+        ├── PostToolUse ─────► Test Watcher
+        │                      ├── CI Integration
+        │                      └── Context Validator
         │
         ├── Notification ────────► Audio Feedback
         │
@@ -95,7 +100,7 @@ These hooks execute at specific points in Claude Code's lifecycle, providing det
 
 **Purpose**: Provides pleasant audio feedback when Claude Code needs your attention or completes tasks.
 
-**Triggers**: 
+**Triggers**:
 - `Notification` events (all notifications including input needed)
 - `Stop` events (main task completion)
 
@@ -107,6 +112,123 @@ These hooks execute at specific points in Claude Code's lifecycle, providing det
 - Two notification types:
   - `input`: When Claude needs user input
   - `complete`: When Claude completes tasks
+
+### 5. Test Runner Hook (`test-runner-hook.sh`)
+
+**Purpose**: Validates that tests pass before git commits, preventing broken code from being committed.
+
+**Trigger**: `PreToolUse` for `Bash` tool (specifically git commit commands)
+
+**Features**:
+- Detects git commit commands automatically
+- Auto-detects testing framework (Jest, Vitest, pytest, Go, Cargo)
+- Runs only affected tests based on staged files
+- Blocks commits if tests fail with detailed output
+- Configurable via `config/test-patterns.json`
+- Comprehensive logging for debugging
+
+**Configuration**:
+- Enable in `config/test-patterns.json` by setting `pre_commit.enabled: true`
+- Configure timeout, skip patterns, and failure behavior
+
+### 6. Test Context Injector (`test-context-injector.sh`)
+
+**Purpose**: Automatically enriches test-related Task prompts with testing framework context and project conventions.
+
+**Trigger**: `PreToolUse` for `Task` tool (when prompt contains test-related keywords)
+
+**Features**:
+- Detects test-related prompts via keyword matching
+- Auto-detects project's testing framework
+- Injects framework-specific patterns and best practices
+- Includes existing test directory locations
+- References test configuration files
+- Provides testing guidelines adapted to the framework
+
+**Detection Keywords**: test, spec, coverage, mock, stub, fixture, assert, expect, jest, pytest, vitest
+
+### 7. Test Watcher Hook (`test-watcher.sh`)
+
+**Purpose**: Provides continuous testing feedback by running related tests when source files are modified.
+
+**Trigger**: `PostToolUse` for `Write` and `Edit` tools
+
+**Features**:
+- Monitors file modifications in real-time
+- Finds and runs related test files
+- Framework-aware test execution
+- Non-blocking (runs in background)
+- Audio notifications for pass/fail
+- Configurable via `config/test-patterns.json`
+
+**Configuration**:
+- Enable in `config/test-patterns.json` by setting `watch_mode.enabled: true`
+- Configure timeout, notification preferences
+
+### 8. CI Integration Hook (`ci-integration-hook.sh`)
+
+**Purpose**: Analyzes project structure and provides CI/CD configuration suggestions when CI files are created or modified.
+
+**Trigger**: `PostToolUse` for `Write` tool (CI/CD configuration files)
+
+**Features**:
+- Detects CI/CD file creation (GitHub Actions, GitLab CI, CircleCI, Jenkins)
+- Auto-detects project type (Node.js, Python, Go, Rust, Docker)
+- Generates framework-specific CI suggestions
+- Logs recommendations for review
+- Non-blocking (suggestions only)
+
+**Supported CI Platforms**:
+- GitHub Actions (`.github/workflows/`)
+- GitLab CI (`.gitlab-ci.yml`)
+- CircleCI (`.circleci/config.yml`)
+- Jenkins (`Jenkinsfile`)
+- Travis CI (`.travis.yml`)
+
+### 9. Context Validator Hook (`context-validator-hook.sh`)
+
+**Purpose**: Validates documentation consistency and identifies stale CONTEXT.md files.
+
+**Trigger**: `PostToolUse` for `Read` and `Edit` tools (CONTEXT.md and CLAUDE.md files)
+
+**Features**:
+- Validates file references in documentation
+- Detects potentially stale documentation
+- Checks docs-overview.md consistency
+- Identifies undocumented CONTEXT files
+- Logs warnings for review
+- Non-blocking operation
+
+**Validations Performed**:
+- Broken link detection in markdown
+- Staleness check (source files newer than docs)
+- docs-overview.md synchronization
+- Missing documentation identification
+
+### 10. Session Analytics Hook (`session-analytics-hook.sh`)
+
+**Purpose**: Tracks command and tool usage patterns for insights and optimization.
+
+**Trigger**: `PreToolUse` for all tools
+
+**Features**:
+- Tracks tool invocations
+- Records command usage patterns
+- Calculates daily activity metrics
+- Generates usage reports
+- Local-only data storage (no external transmission)
+- Privacy-focused (no content or file paths recorded)
+
+**Configuration**:
+- Enable in `config/analytics-config.json` by setting `enabled: true`
+- Configure data retention and tracking preferences
+- Run `./session-analytics-hook.sh --report` to view analytics
+
+**Privacy Guarantees**:
+- All data stored locally only
+- No file paths or content recorded
+- Fully anonymized metrics
+- No external transmission
 
 ## Installation
 

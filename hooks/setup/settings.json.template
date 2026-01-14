@@ -28,6 +28,53 @@
             "type": "command",
             "command": "${WORKSPACE}/.claude/hooks/subagent-context-injector.sh",
             "description": "Automatically adds project context to sub-agent prompts"
+          },
+          {
+            "type": "command",
+            "command": "${WORKSPACE}/.claude/hooks/test-context-injector.sh",
+            "description": "Adds testing context to test-related sub-agent prompts"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${WORKSPACE}/.claude/hooks/test-runner-hook.sh",
+            "description": "Runs tests before git commits (enable in config/test-patterns.json)"
+          }
+        ]
+      },
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${WORKSPACE}/.claude/hooks/session-analytics-hook.sh",
+            "description": "Tracks command and tool usage (enable in config/analytics-config.json)"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${WORKSPACE}/.claude/hooks/test-watcher.sh",
+            "description": "Runs related tests when files change (enable in config/test-patterns.json)"
+          },
+          {
+            "type": "command",
+            "command": "${WORKSPACE}/.claude/hooks/ci-integration-hook.sh",
+            "description": "Suggests CI/CD configurations when CI files are created"
+          },
+          {
+            "type": "command",
+            "command": "${WORKSPACE}/.claude/hooks/context-validator-hook.sh",
+            "description": "Validates CONTEXT.md consistency and freshness"
           }
         ]
       }

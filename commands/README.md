@@ -105,6 +105,142 @@ All commands benefit from automatic context injection via the `subagent-context-
 
 **How it works**: Updates the handoff documentation with session achievements, current state, and next steps. Ensures smooth continuation in future sessions.
 
+### 🧪 `/test`
+**Purpose**: Multi-agent test generation and execution framework for comprehensive, maintainable tests.
+
+**When to use**:
+- Generating tests for new or existing code
+- Running tests for specific components
+- Need comprehensive test coverage for a feature
+- Want to validate changes before committing
+
+**How it works**: Detects your testing framework automatically, spawns specialized agents for unit tests, integration tests, and edge cases. Generates tests following your project's existing patterns and conventions.
+
+**Key features**:
+- Framework auto-detection (Jest, Vitest, pytest, Go, Cargo, Mocha)
+- Multi-agent parallel test generation
+- Edge case and error handling coverage
+- Respects existing test patterns
+
+### 📊 `/test-coverage`
+**Purpose**: Deep coverage analysis that identifies untested code paths and provides actionable recommendations.
+
+**When to use**:
+- Evaluating test suite completeness
+- Identifying coverage gaps before releases
+- Planning test improvement efforts
+- Understanding test quality beyond percentages
+
+**How it works**: Runs coverage tools, analyzes results with specialized agents, categorizes gaps by severity, and provides prioritized recommendations for improvement.
+
+**Key features**:
+- Coverage metrics collection and analysis
+- Gap categorization (critical, high, medium, low)
+- Test quality assessment beyond line coverage
+- Actionable improvement recommendations
+
+### 🔒 `/dependency-audit`
+**Purpose**: Security and health analysis of project dependencies with vulnerability scanning and upgrade recommendations.
+
+**When to use**:
+- Regular security audits
+- Before releases to check for vulnerabilities
+- When updating dependencies
+- Compliance requirements
+
+**How it works**: Runs native audit tools (npm audit, pip-audit, etc.), analyzes vulnerabilities with specialized agents, and provides prioritized fix recommendations with breaking change warnings.
+
+**Key features**:
+- Multi-ecosystem support (npm, pip, go, cargo, etc.)
+- CVE severity classification
+- Upgrade path analysis with breaking change detection
+- License compatibility checking
+
+### ⚡ `/performance`
+**Purpose**: Multi-agent performance profiling that identifies bottlenecks and provides optimization recommendations.
+
+**When to use**:
+- Investigating slow endpoints or operations
+- Pre-release performance validation
+- Memory leak investigations
+- Database query optimization
+
+**How it works**: Deploys specialized agents for CPU profiling, memory analysis, I/O analysis, and algorithm review. Provides quantified improvement recommendations.
+
+**Key features**:
+- Framework-specific profiling tools
+- Flamegraph analysis
+- Memory leak detection
+- N+1 query identification
+
+### 🐛 `/debug`
+**Purpose**: Systematic debugging framework that traces errors to root causes with targeted fix recommendations.
+
+**When to use**:
+- Investigating runtime errors
+- Tracking down logic bugs
+- Understanding intermittent failures
+- Complex multi-component issues
+
+**How it works**: Parses error context, traces execution flow, analyzes state, and matches against known bug patterns. Provides root cause analysis with fix strategies.
+
+**Key features**:
+- Stack trace analysis
+- Execution flow tracing
+- State corruption detection
+- Pattern-based bug recognition
+
+### 🔄 `/migrate`
+**Purpose**: Migration planning and execution for version upgrades, database changes, and architectural transformations.
+
+**When to use**:
+- Major version upgrades (React 18→19, etc.)
+- Database schema changes
+- API version transitions
+- Platform migrations
+
+**How it works**: Analyzes impact, identifies breaking changes, plans transformation steps, and generates rollback strategies. Provides step-by-step migration plans.
+
+**Key features**:
+- Breaking change analysis
+- Data migration planning
+- Rollback strategy generation
+- Validation checkpoints
+
+### 🏗️ `/scaffold`
+**Purpose**: Project scaffolding and template generation following existing project conventions.
+
+**When to use**:
+- Creating new components
+- Adding new features
+- Setting up new modules
+- Generating boilerplate
+
+**How it works**: Analyzes existing patterns in your codebase, generates consistent implementations with tests and documentation. Creates complete, working code.
+
+**Key features**:
+- Pattern detection from existing code
+- Framework-aware generation
+- Test file generation
+- Documentation creation
+
+### 📚 `/api-docs`
+**Purpose**: API documentation generator producing OpenAPI/Swagger specifications and reference documentation.
+
+**When to use**:
+- Documenting REST APIs
+- Generating OpenAPI specs
+- Creating SDK documentation
+- API reference updates
+
+**How it works**: Analyzes route definitions, extracts schemas, generates examples, and produces machine-readable specs with human-readable documentation.
+
+**Key features**:
+- OpenAPI 3.x generation
+- Request/response example generation
+- Authentication documentation
+- Multiple output formats
+
 ## Integration Patterns
 
 ### Typical Workflow
@@ -128,7 +264,16 @@ All commands benefit from automatic context injection via the `subagent-context-
 /full-context "analyze authentication module"   # Understand current state
 /refactor "@auth/large-auth-file.ts"          # Restructure
 /code-review "review refactored auth"          # Verify quality
+/test "generate tests for refactored auth"     # Ensure coverage
 /update-docs "document new auth structure"     # Keep docs current
+```
+
+### Test-Driven Development
+```bash
+/test "generate tests for user registration"   # Write tests first
+# ... implement the feature ...
+/test "run tests for user registration"        # Verify implementation
+/test-coverage "analyze registration coverage" # Check completeness
 ```
 
 ### Complex Problem Solving

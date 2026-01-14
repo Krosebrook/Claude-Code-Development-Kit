@@ -1,0 +1,141 @@
+{
+  "pre_commit": {
+    "enabled": false,
+    "description": "Run tests before git commits. Set to true to enable pre-commit test validation.",
+    "fail_on_error": true,
+    "timeout_seconds": 120,
+    "skip_patterns": [
+      "*.md",
+      "*.json",
+      "*.yml",
+      "*.yaml",
+      "*.txt",
+      ".gitignore"
+    ]
+  },
+  "watch_mode": {
+    "enabled": false,
+    "description": "Automatically run tests when files are modified. Set to true to enable continuous testing.",
+    "timeout_seconds": 30,
+    "run_related_only": true,
+    "notify_on_success": true,
+    "notify_on_failure": true
+  },
+  "frameworks": {
+    "jest": {
+      "config_files": ["jest.config.js", "jest.config.ts", "jest.config.json"],
+      "test_patterns": ["**/*.test.ts", "**/*.test.tsx", "**/*.test.js", "**/*.test.jsx", "**/*.spec.ts", "**/*.spec.js"],
+      "test_command": "npx jest",
+      "coverage_command": "npx jest --coverage"
+    },
+    "vitest": {
+      "config_files": ["vitest.config.js", "vitest.config.ts", "vite.config.js", "vite.config.ts"],
+      "test_patterns": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+      "test_command": "npx vitest run",
+      "coverage_command": "npx vitest run --coverage"
+    },
+    "pytest": {
+      "config_files": ["pytest.ini", "pyproject.toml", "setup.cfg", "tox.ini"],
+      "test_patterns": ["**/test_*.py", "**/*_test.py", "**/tests/*.py"],
+      "test_command": "pytest",
+      "coverage_command": "pytest --cov"
+    },
+    "go": {
+      "config_files": ["go.mod"],
+      "test_patterns": ["**/*_test.go"],
+      "test_command": "go test ./...",
+      "coverage_command": "go test -cover ./..."
+    },
+    "cargo": {
+      "config_files": ["Cargo.toml"],
+      "test_patterns": ["**/tests/*.rs", "src/**/*.rs"],
+      "test_command": "cargo test",
+      "coverage_command": "cargo tarpaulin"
+    },
+    "mocha": {
+      "config_files": [".mocharc.js", ".mocharc.json", ".mocharc.yml", "mocha.opts"],
+      "test_patterns": ["**/*.test.js", "**/*.spec.js", "**/test/*.js"],
+      "test_command": "npx mocha",
+      "coverage_command": "npx nyc mocha"
+    }
+  },
+  "coverage": {
+    "thresholds": {
+      "lines": 80,
+      "branches": 75,
+      "functions": 85,
+      "statements": 80
+    },
+    "fail_below_threshold": false,
+    "exclude_patterns": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/*.d.ts",
+      "**/coverage/**",
+      "**/__mocks__/**"
+    ]
+  },
+  "test_file_patterns": {
+    "co_located": {
+      "description": "Test files next to source files",
+      "pattern": "{name}.test.{ext}",
+      "examples": ["component.ts → component.test.ts"]
+    },
+    "separate_directory": {
+      "description": "Tests in dedicated test directory",
+      "pattern": "tests/{name}.test.{ext}",
+      "examples": ["src/component.ts → tests/component.test.ts"]
+    },
+    "jest_convention": {
+      "description": "Jest __tests__ directory convention",
+      "pattern": "__tests__/{name}.test.{ext}",
+      "examples": ["src/component.ts → src/__tests__/component.test.ts"]
+    },
+    "python_convention": {
+      "description": "Python test_ prefix convention",
+      "pattern": "test_{name}.py",
+      "examples": ["module.py → test_module.py"]
+    }
+  },
+  "edge_case_categories": {
+    "boundary_values": {
+      "description": "Test values at boundaries",
+      "examples": ["0", "-1", "MAX_INT", "empty string", "null", "undefined"]
+    },
+    "invalid_input": {
+      "description": "Test invalid/malformed input",
+      "examples": ["wrong type", "missing required fields", "malformed data"]
+    },
+    "error_conditions": {
+      "description": "Test error handling paths",
+      "examples": ["network failures", "timeout", "permission denied", "not found"]
+    },
+    "concurrency": {
+      "description": "Test concurrent operations",
+      "examples": ["race conditions", "deadlocks", "parallel execution"]
+    },
+    "security": {
+      "description": "Test security-related edge cases",
+      "examples": ["injection attacks", "XSS", "authorization bypass", "data exposure"]
+    }
+  },
+  "mock_patterns": {
+    "external_apis": {
+      "description": "Mock external API calls",
+      "approach": "Use HTTP interceptors or mock functions"
+    },
+    "databases": {
+      "description": "Mock database operations",
+      "approach": "Use in-memory databases or mock repositories"
+    },
+    "file_system": {
+      "description": "Mock file system operations",
+      "approach": "Use mock-fs or virtual file systems"
+    },
+    "time_date": {
+      "description": "Mock time and date functions",
+      "approach": "Use fake timers or date mocking libraries"
+    }
+  }
+}
